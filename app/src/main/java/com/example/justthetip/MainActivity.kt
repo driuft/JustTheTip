@@ -10,37 +10,27 @@ import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.example.justthetip.databinding.ActivityMainBinding
 
 private const val TAG = "MainActivity"
 private const val INITIAL_TIP_PERCENT = 15
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var etBaseAmount: EditText
-    private lateinit var seekBarTip: SeekBar
-    private lateinit var tvTipPercentLabel: TextView
-    private lateinit var tvTipAmount: TextView
-    private lateinit var tvTotalAmount: TextView
-    private lateinit var tvTipDescription: TextView
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         supportActionBar?.hide()
 
-        etBaseAmount = findViewById(R.id.etBaseAmount)
-        seekBarTip = findViewById(R.id.seekBarTip)
-        tvTipPercentLabel = findViewById(R.id.tvTipPercentLabel)
-        tvTipAmount = findViewById(R.id.tvTipAmount)
-        tvTotalAmount = findViewById(R.id.tvTotalAmount)
-        tvTipDescription = findViewById(R.id.tvTipDescription)
-
-        seekBarTip.progress = INITIAL_TIP_PERCENT
-        tvTipPercentLabel.text = "$INITIAL_TIP_PERCENT%"
+        binding.seekBarTip.progress = INITIAL_TIP_PERCENT
+        binding.tvTipPercentLabel.text = "$INITIAL_TIP_PERCENT%"
         updateTipDescription(INITIAL_TIP_PERCENT)
-        seekBarTip.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+        binding.seekBarTip.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                tvTipPercentLabel.text = "$p1%"
+                binding.tvTipPercentLabel.text = "$p1%"
                 computeTipAndTotal()
                 updateTipDescription(p1)
             }
@@ -52,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-        etBaseAmount.addTextChangedListener(object: TextWatcher {
+        binding.etBaseAmount.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -73,30 +63,30 @@ class MainActivity : AppCompatActivity() {
             in 20..24 -> "Great"
             else -> "Amazing!"
         }
-        tvTipDescription.text = tipDescription
+        binding.tvTipDescription.text = tipDescription
         // Update the color based on the tipPercent
         val color = ArgbEvaluator().evaluate(
-            tipPercent.toFloat() / seekBarTip.max,
+            tipPercent.toFloat() / binding.seekBarTip.max,
             ContextCompat.getColor(this, R.color.color_worst_tip),
             ContextCompat.getColor(this, R.color.color_best_tip)
         ) as Int
-        tvTipDescription.setTextColor(color)
+        binding.tvTipDescription.setTextColor(color)
     }
 
     private fun computeTipAndTotal() {
-        if (etBaseAmount.text.isEmpty()) {
-            tvTipAmount.text = ""
-            tvTotalAmount.text = ""
+        if (binding.etBaseAmount.text.isEmpty()) {
+            binding.tvTipAmount.text = ""
+            binding.tvTotalAmount.text = ""
             return
         }
         // 1. Get the base value and tip percent
-        val baseAmount = etBaseAmount.text.toString().toDouble()
-        val tipPercent = seekBarTip.progress
+        val baseAmount = binding.etBaseAmount.text.toString().toDouble()
+        val tipPercent = binding.seekBarTip.progress
         // 2. Compute the tip and total
         val tipAmount = baseAmount * tipPercent / 100
         val totalAmount = baseAmount + tipAmount
         // 3. Update the UI
-        tvTipAmount.text = "%.2f".format(tipAmount)
-        tvTotalAmount.text = "%.2f".format(totalAmount)
+        binding.tvTipAmount.text = "%.2f".format(tipAmount)
+        binding.tvTotalAmount.text = "%.2f".format(totalAmount)
     }
 }
