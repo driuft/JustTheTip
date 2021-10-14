@@ -22,7 +22,7 @@
         android:id="@+id/tvTipPercentLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/tvBaseLabel"
@@ -58,7 +58,7 @@
         android:ems="8"
         android:hint="Bill amount"
         android:inputType="numberDecimal"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@id/tvBaseLabel"
         app:layout_constraintStart_toEndOf="@id/tvBaseLabel"
         app:layout_constraintTop_toTopOf="@id/tvBaseLabel" />
@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:max="30"
         app:layout_constraintBottom_toBottomOf="@+id/tvTipPercentLabel"
-        app:layout_constraintStart_toStartOf="@+id/tvTipAmount"
+        app:layout_constraintStart_toStartOf="@id/etBaseAmount"
         app:layout_constraintTop_toTopOf="@+id/tvTipPercentLabel" />
 
     <TextView
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="@+id/tvTipLabel"
-        app:layout_constraintStart_toStartOf="@+id/tvTotalAmount"
+        app:layout_constraintStart_toStartOf="@id/etBaseAmount"
         app:layout_constraintTop_toTopOf="@+id/tvTipLabel"
         tools:text="19.96" />
 

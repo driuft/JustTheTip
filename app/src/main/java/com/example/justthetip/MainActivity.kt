@@ -1,11 +1,13 @@
 package com.example.justthetip
 
 import android.animation.ArgbEvaluator
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
@@ -23,7 +25,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Hide action bar
         supportActionBar?.hide()
+        // Change status bar text color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(false)
+        } else {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
 
         binding.seekBarTip.progress = INITIAL_TIP_PERCENT
         binding.tvTipPercentLabel.text = "$INITIAL_TIP_PERCENT%"
